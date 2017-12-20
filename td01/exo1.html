@@ -1,0 +1,19 @@
+<script type="text/javascript">
+function Etudiant(nom, prenom, numEtu, dataN) {
+  this.nom = nom;
+  this.prenom=prenom;
+  this.numeroEtu=numEtu;
+  var dateParts = dataN.split("/");
+  var dateObject = new Date(dateParts[2], dateParts[1], dateParts[0]); // month is 0-based
+
+  this.dateNaissance = {
+    jour :  dateObject.getDate(),
+    mois : dateObject.getMonth(),
+    annee : dateObject.getFullYear()
+  };
+}
+
+var etu = new Etudiant('Dédé', 'Bernard', '211111111027', '21/11/1997');
+console.log(etu);
+
+</script>

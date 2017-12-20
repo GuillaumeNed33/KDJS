@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jquery UI - Exercice 1</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+
+    <style>
+        body{ font-family: 'Quicksand', sans-serif; }
+        ul li { list-style: none;}
+    </style>
+</head>
+
+<body>
+
+<h1>Jquery UI</h1>
+<div style="width: 300px; height: 300px; border: 2px solid #000000;">
+    <div id="draggable" class="ui-widget-content" style="width: 100px; height: 100px; background-color: #990000;">
+
+    </div>
+</div>
+
+<p>Coordonnées X : <span id="coordX"></span></p>
+<p>Coordonnées Y : <span id="coordY"></span></p>
+
+
+
+<h1 style="margin-top: 50px;">Liste Triable</h1>
+<ul id="sortable">
+    <li class="ui-state-default" data-id="1">Item 1</li>
+    <li class="ui-state-default" data-id="2">Item 2</li>
+    <li class="ui-state-default" data-id="3">Item 3</li>
+    <li class="ui-state-default" data-id="4">Item 4</li>
+    <li class="ui-state-default" data-id="5">Item 5</li>
+</ul>
+<button type="button" id="sortListe">Ordre de la liste</button>
+<span id="ordre"></span>
+
+<!-- SCRIPTS -->
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery-ui/jquery-ui.js"></script>
+
+<script type="application/javascript">
+    $(document).ready(function(){
+        //Carré draggable
+        $( "#draggable" ).draggable({
+            containment: "parent",
+            drag: function( event, ui ) {
+                $('#coordX').text( ui.offset.left);
+                $('#coordY').text( ui.offset.top);
+            }
+        });
+
+        //Liste triable
+        $( "#sortable" ).sortable({
+            revert: true
+        });
+        $( "ul, li" ).disableSelection();
+
+        $('#sortListe').on('click', function () {
+            $('#ordre').empty().append('| ');
+            $('li').each(function (t) {
+                $('#ordre').append($(this).attr('data-id') + " | ");
+            });
+        });
+
+        $('li, h1, p').bigPolice();
+    });
+
+    (function ($) {
+        $.fn.bigPolice = function () {
+            $(this).hover(function () {
+                $(this).css('font-size', '+=2');
+            });
+            return this;
+        };
+    })(jQuery);
+</script>
+
+</body>
+</html>

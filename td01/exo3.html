@@ -1,0 +1,40 @@
+<script type="text/javascript">
+
+var Personne = {
+  nom: "",
+  prenom: "",
+  dateNaissance: [1, 1, 1977],
+  init: function(nom, prenom, dateNaissance){
+    this.nom = nom;
+    this.prenom = prenom;
+    this.dateNaissance = dateNaissance;
+  },
+  decrire: function(){ console.log( '...' ); }
+};
+
+var Etudiant = Object.create(Personne);
+Etudiant.numEtudiant = 0;
+Etudiant.initEtudiant = function(nom, prenom, dateNaissance, numEtudiant){
+  this.init(nom, prenom, dateNaissance);
+  this.numEtudiant = numEtudiant;
+}
+
+var etu = Object.create(Etudiant);
+etu.initEtudiant('Durand', 'Kevin', [26, 7, 1991], 574812);
+
+var Professeur = Object.create(Personne);
+Professeur.initProfesseur = function(nom, prenom, dateNaissance, mailProf){
+  this.init(nom, prenom, dateNaissance);
+  this.mailProf = mailProf;
+}
+
+var prof1 = Object.create(Professeur);
+prof1.initProfesseur('Dupoy', 'Tom', [21, 11, 1991], 'cc@prof.fr');
+
+var prof2 = Object.create(Professeur);
+prof2.initProfesseur('Chan', 'Jacky', [26, 7, 1975], 'jc@china.fr');
+
+console.log(prof1);
+console.log(prof2);
+
+</script>

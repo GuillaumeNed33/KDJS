@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
+
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <style>
+
+        body {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            background-image: url("96113.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-around;
+        }
+
+        #form {
+            width: 30%;
+            min-height: 672px;
+
+            margin-left: 3%;
+            margin-right: 3%;
+            margin-top: 35px;
+            padding: 75px;
+            background-color: #fcf9ff;
+            border-radius: 5px;
+            box-shadow: 1px 1px 12px #555;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+        }
+
+        #todolist {
+            flex-grow: 1;
+            line-height: 1;
+            width: 30%;
+            margin-left: 3%;
+            margin-right: 3%;
+            margin-top: 35px;
+            min-height: 775px;
+            padding-top:35px;
+            position:relative;
+            border:1px solid #E8E8E8;
+            border-top:12px solid #fdfd86;
+            border-bottom-right-radius: 60px 5px;
+            display:inline-block;
+            background: #ffff88; /* Old browsers */
+            background: -moz-linear-gradient(-45deg, #ffff88 81%, #ffff88 82%, #ffff88 82%, #ffffc6 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, right bottom, color-stop(81%,#ffff88), color-stop(82%,#ffff88), color-stop(82%,#ffff88), color-stop(100%,#ffffc6)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(-45deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* IE10+ */
+            background: linear-gradient(135deg, #ffff88 81%,#ffff88 82%,#ffff88 82%,#ffffc6 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff88', endColorstr='#ffffc6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+            text-align: left;
+            font-family: 'Caveat', cursive;
+            font-size: 48px;
+        }
+
+        #todolist ul {
+            padding-left: 75px;
+            list-style: none;
+        }
+
+        #todolist:after {
+            content: "";
+            position:absolute;
+            z-index:-1;
+            right:-0px; bottom:20px;
+            width:425px;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow:2px 15px 5px rgba(0, 0, 0, 0.40);
+            -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+            -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+            -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+            -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
+            transform: matrix(-1, -0.1, 0, 1, 0, 0);
+        }
+
+        .pin {
+            background-color: #aaa;
+            display: block;
+            height: 50px;
+            width: 3px;
+            position: absolute;
+            left: 50%;
+            top: -16px;
+            z-index: 1;
+        }
+
+        .pin:after {
+            background-color: #A31;
+            background-image: radial-gradient(25% 25%, circle, hsla(0,0%,100%,.3), hsla(0,0%,0%,.3));
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.1),
+            inset 3px 3px 3px hsla(0,0%,100%,.2),
+            inset -3px -3px 3px hsla(0,0%,0%,.2),
+            40px 24px 3px hsla(0,0%,0%,.35);
+            content: '';
+            height: 24px;
+            left: -11px;
+            position: absolute;
+            top: -10px;
+            width: 24px;
+        }
+
+        .pin:before {
+            background-color: hsla(0,0%,0%,0.1);
+            box-shadow: 0 0 .25em hsla(0,0%,0%,.1);
+            content: '';
+
+            height: 42px;
+            width: 3px;
+            left: 0;
+            position: absolute;
+            top: 8px;
+
+            transform: rotate(57.5deg);
+            -moz-transform: rotate(57.5deg);
+            -webkit-transform: rotate(57.5deg);
+            -o-transform: rotate(57.5deg);
+            -ms-transform: rotate(57.5deg);
+
+            transform-origin: 50% 100%;
+            -moz-transform-origin: 50% 100%;
+            -webkit-transform-origin: 50% 100%;
+            -ms-transform-origin: 50% 100%;
+            -o-transform-origin: 50% 100%;
+        }
+
+        h1 {
+            font-size: 72px;
+            text-align: center;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        input {
+            width: 80%;
+            height: 50px;
+            font-size: 36px;
+            padding-left: 8px;
+        }
+
+        p {
+            font-size: 28px;
+            text-align: center;
+        }
+
+        li {
+            margin-bottom: 35px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+        }
+        a:hover {
+            color: #444;
+        }
+
+        .puce {
+            font-size: 35px;
+            margin-right: 24px;
+        }
+
+        .fa:first-child {
+            display: inline-block;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="form">
+        <h1>ToDos</h1>
+        <hr>
+        <input type="text" id="item" placeholder="Nouvelle tâche..."/>
+        <p><i>Appuyer sur "entrée" pour ajouter la tâche</i></p>
+    </div>
+    <div id="todolist">
+        <i class="pin"></i>
+        <ul id="list">
+
+        </ul>
+    </div>
+</div>
+
+<script type="application/javascript">
+    var dataId = 1;
+
+    function add() {
+        if($('#item').val() != "") {
+            $('#list').append(
+                "<li id='tache" + dataId + "'><span id='" + dataId + "' class='puce fa fa-circle-thin'></span>" + $('#item').val() +
+                "<a href='#'><span class='fa fa-edit' onclick='edit("+ dataId+ ")'></span></a>" +
+                "<a href='#'><span class='fa fa-trash'  onclick='suppr("+ dataId+ ")'></span></a>" +
+                "</li>"
+            );
+            dataId++;
+            $('#item').val('');
+
+            $('.puce').unbind('click').click( function () {
+                if($(this).attr('class').includes('fa-circle-thin')) {
+                    $(this).css('color', '#0e7110');
+                    $(this).removeClass('fa-circle-thin').addClass('fa-check-circle');
+                }
+                else {
+                    $(this).css('color', '#000');
+                    $(this).removeClass('fa-check-circle').addClass('fa-circle-thin');
+                }
+            });
+        }
+        // Store
+        localStorage.setItem("list", $('list').innerHTML);
+    }
+
+    function edit(id) {
+        var objet = '#tache' + id;
+        var rep = prompt('Modification de la tâche : "' + $(objet).text() + '"');
+        if (rep != null) {
+            rep = "<span id='"+id+"' class='puce fa fa-circle-thin'></span>" + rep;
+            rep += "<a href='#'><span class='fa fa-edit' onclick='edit("+ id+ ")'></span></a>";
+            rep += "<a href='#'><span class='fa fa-trash'  onclick='suppr("+ id+ ")'></span></a>";
+            $(objet).empty().append(rep);
+        }
+        localStorage.setItem("list", $('list').innerHTML);
+    }
+
+    function suppr(id) {
+        var objet = '#tache' + id;
+        var rep = confirm('Etes-vous sur de vouloir supprimer la tâche "' + $(objet).text() + '" ?');
+        if (rep == true) {
+            $(objet).remove();
+        }
+        localStorage.setItem("list", $('list').innerHTML);
+    }
+
+    $(document).ready(function(){
+        $('list').innerHTML =  localStorage.getItem("list");
+
+        $( "#list" ).sortable({
+            revert: true
+        });
+        $( "ul, li" ).disableSelection();
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                add();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

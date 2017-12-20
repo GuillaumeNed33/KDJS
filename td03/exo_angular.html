@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Angular JS - Intro</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <style>
+        body{ font-family: 'Quicksand', sans-serif; }
+    </style>
+</head>
+
+<body>
+
+<div ng-app="app01" ng-controller="controlleur01">
+    <h2>------------------------- EXERCICE 3 ----------------------------------</h2>
+
+    <p>Couleur: <input type="text" ng-model="color" style="background-color: {{color}};"></p>
+
+    <p>{{ name }}</p>
+
+
+    <p>{{ ajouter(12) }}</p>
+
+    <h2>------------------------- EXERCICE 4 ----------------------------------</h2>
+
+    <input type="text" ng-model="nombre1"/>
+    <input type="text" ng-model="nombre2"/>
+    <select ng-model="operator">
+        <option value="+" selected>+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <br>
+    <span>{{nombre1}} {{operator}} {{nombre2}} = {{result()}}</span>
+
+    <h2>------------------- EXERCICE 5 - 6 - 7 - 8 ----------------------------</h2>
+
+    <h3>Pokedex :</h3>
+    <ul>
+        <li ng-repeat="base in pokedex">
+            {{base.ename}}
+        </li>
+    </ul>
+
+</div>
+
+<script>
+    var app = angular.module("app01", []);
+    app.controller("controlleur01", function($scope, $http){
+        //exo 3
+        $scope.color = "purple";
+        $scope.name = "José";
+        $scope.ajouter = function(nbr){ return parseInt(nbr) + 1 };
+
+        //exo4
+        $scope.nombre1 = 9;
+        $scope.nombre2 = 12;
+        $scope.operator = '*';
+        $scope.result =  function() {
+            if ($scope.operator == '+') {
+                return parseInt($scope.nombre1) + parseInt($scope.nombre2);
+            }
+            if ($scope.operator == '-') {
+                return parseInt($scope.nombre1) - parseInt($scope.nombre2);
+            }
+            if ($scope.operator == '*') {
+                return parseInt($scope.nombre1) * parseInt($scope.nombre2);
+            }
+            if ($scope.operator == '/') {
+                return parseInt($scope.nombre1) / parseInt($scope.nombre2);
+            }
+        };
+
+        //exo 5-6-7-8
+        $http.get("https://raw.githubusercontent.com/fanzeyi/Pokemon-DB/master/pokedex.json")
+            .then(function(response){
+                $scope.pokedex = response.data;
+            });
+
+    });
+</script>
+
+</body>
+</html>

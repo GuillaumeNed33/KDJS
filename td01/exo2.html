@@ -1,0 +1,49 @@
+<script type="text/javascript">
+function Etudiant(nom, prenom, numEtu, dataN) {
+  this.nom = nom;
+  this.prenom=prenom;
+  this.numeroEtu=numEtu;
+
+  var dateParts = dataN.split("/");
+  var dateObject = new Date(dateParts[2], dateParts[1], dateParts[0]); // month is 0-based
+
+  this.dateNaissance = {
+    jour :  dateObject.getDate(),
+    mois : dateObject.getMonth(),
+    annee : dateObject.getFullYear()
+  };
+
+  this.presenter = function() {
+    var response = "Etudiant : " + this.prenom + ' ' + this.nom + '.\n'
+    + 'Numero Etudiant = ' + this.numeroEtu + '\n' +
+    'Né le ' + this.dateNaissance['jour'] + '/' + this.dateNaissance['mois'] + '/' + this.dateNaissance['annee'];
+    console.log(response);
+  }
+
+  this.age = function() {
+    var today = new Date();
+    var an= this.dateNaissance['annee'];
+    var mois= this.dateNaissance['mois'];
+    var day= this.dateNaissance['jour'];
+    var dateNaissance = new Date(an + "-" + mois + "-" + day);
+
+    var age = today.getFullYear() - dateNaissance.getFullYear();
+    var m = today.getMonth() - dateNaissance.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dateNaissance.getDate())) {
+      age = age - 1;
+    }
+    console.log('Age : ' + age);
+  }
+}
+
+var etu = new Etudiant('Dédé', 'Bernard', '211111111027', '21/11/1997');
+console.log(etu);
+etu.presenter();
+etu.age();
+
+var etu2 = new Etudiant('Bernard', 'Gege', '1205184466', '21/08/1995');
+console.log(etu2);
+etu2.presenter();
+etu2.age();
+
+</script>

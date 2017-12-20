@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Exercice 5</title>
+
+    <meta name="description" content="Description de la page">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+    <style>
+        body{ font-family: 'Quicksand', sans-serif; }
+        #infos > li {
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <script src="jquery-3.2.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#form').submit(function () {
+                $('#infos').empty();
+                $.ajax({
+                    url: 'https://geo.api.gouv.fr/communes?' + $('#search').val() + "=" +  $('#searchVal').val(),
+                    dataType: 'json',
+                    beforeSend: function(){ console.log('Envoi de la requête ...'); },
+                    complete: function(data){
+                        if(data.status != 200) {
+                            alert('Mauvaise Requête !');
+                        }
+                        else {
+                            console.log(data);
+                            (data.responseJSON).forEach(function (item) {
+
+                                var codePostaux = "<ul>";
+                                item.codesPostaux.forEach(function (item) {
+                                    codePostaux+="<li>" + item + "</li>";
+                                });
+                                codePostaux += "</ul>";
+
+                                $('#infos').append(
+                                    "<li>Nom : " + item.nom + "<ul>" +
+                                    "<li>Code : " + item.code + "</li>" +
+                                    "<li>Code Département : " + item.codeDepartement + "</li>" +
+                                    "<li>Code Région : " + item.codeRegion + "</li>" +
+                                    "<li>Population : " + item.population + "</li>" +
+                                    "<li>Codes Postaux : " + codePostaux + "</li>" +
+                                    "<li>Score : " + item._score + "</li>" +
+                                    "</ul></li>"
+                                );
+                            });
+                        }
+                    },
+                    method: 'GET'
+                });
+                return false;
+            });
+        });
+    </script>
+
+</head>
+<body>
+<h1>Institut Geographique National</h1>
+<form id="form">
+    <select name="search" id="search" required>
+        <option value="nom" selected>Nom</option>
+        <option value="codePostal">Code postal</option>
+        <option value="codeDepartement">Code departement</option>
+    </select>
+    <br><br>
+    <input id="searchVal" type="text" name="searchVal" placeholder="rechercher..." required>
+    <br><br>
+    <button type="submit">Rechercher</button>
+</form>
+<ul id="infos" style="display: inline-block"></ul>
+</body>
+</html>

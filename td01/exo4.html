@@ -1,0 +1,46 @@
+<script type="text/javascript">
+
+var Personne = {
+  nom: "",
+  prenom: "",
+  dateNaissance: [1, 1, 1977],
+  init: function(nom, prenom, taille, dateNaissance){
+    this.nom = nom;
+    this.prenom = prenom;
+    this.taille = taille;
+    this.dateNaissance = dateNaissance;
+  },
+  decrire: function(){ console.log( '...' ); },
+
+  age : function() {
+    var today = new Date();
+    var an= this.dateNaissance['annee'];
+    var mois= this.dateNaissance['mois'];
+    var day= this.dateNaissance['jour'];
+    var dateNaissance = new Date(an + "-" + mois + "-" + day);
+
+    var age = today.getFullYear() - dateNaissance.getFullYear();
+    var m = today.getMonth() - dateNaissance.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dateNaissance.getDate())) {
+      age = age - 1;
+    }
+    console.log('Age : ' + age);
+  }
+  };
+
+var Professeur = Object.create(Personne);
+Professeur.initProfesseur = function(nom, prenom, taille , dateNaissance, mailProf){
+  this.init(nom, prenom, taille, dateNaissance);
+  this.mailProf = mailProf;
+}
+
+var prof1 = Object.create(Professeur);
+prof1.initProfesseur('Dupoy', 'Tom', '178' , [21, 11, 1991], 'cc@prof.fr');
+
+var prof2 = Object.create(Professeur);
+prof2.initProfesseur('Chan', 'Jacky', '201', [26, 7, 1975], 'jc@china.fr');
+
+console.log(prof1);
+console.log(prof2);
+
+</script>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Exercice 2</title>
+
+  <meta name="description" content="Description de la page">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+  <style>
+  body{ font-family: 'Quicksand', sans-serif; }
+  </style>
+
+  <script src="jquery-3.2.1.min.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+
+    $('#ctntButton1').click(function() {
+      $('#ctnt1').html("<img src='http://www.innovent-e.com/img/loader.gif' />").load('http://www.labri.fr/perso/pbiasutt/KDJS/TD02/exo1.php #conteneur1');
+    });
+    $('#ctntButton2').click(function() {
+      $('#ctnt2').html("<img src='http://www.innovent-e.com/img/loader.gif' />").load('http://www.labri.fr/perso/pbiasutt/KDJS/TD02/exo1.php #conteneur2');
+    });
+  });
+  </script>
+
+</head>
+<body>
+  <h1>Ma page d'exercice 1</h1>
+  <div id="contentLoaded">
+    <div id="ctnt1"></div>
+    <div id="ctnt2"></div>
+  </div>
+  <button id="ctntButton1" type="button">Charger la premiere partie</button>
+  <button id="ctntButton2" type="button">Charger la seconde partie</button>
+
+</body>
+</html>
